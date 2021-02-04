@@ -32,10 +32,6 @@ M2ySimply.configure do |config|
   config.username  = "XXX"
   config.password = "XXX"
   config.proxy = "velodrome.usefixie.com"
-  config.proxy_user = "fixie"
-  config.proxy_pass = "XXX"
-  config.proxy_port = 80
-  config.server_url = "XXX"
 end
 ```
 
