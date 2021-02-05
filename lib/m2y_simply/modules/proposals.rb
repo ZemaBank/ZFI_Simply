@@ -5,7 +5,7 @@ module M2ySimply
 
     def self.create_proposal(body)
       parsed_body = {
-        :CodigoWorkflow => WORKFLOW_CODE,
+        :CodigoWorkflow => M2ySimply.configuration.workflow,
         :DadosEntrada => body
       }
       post(base_url + PROPOSALS_PATH, parsed_body.to_json).parsed_response
