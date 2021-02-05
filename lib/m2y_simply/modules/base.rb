@@ -12,9 +12,7 @@ module M2ySimply
         username: M2ySimply.configuration.username,
         password: M2ySimply.configuration.password
       }
-      token = post_encoded(base_url + TOKEN_PATH, body).parsed_response["token"]
-      puts token
-      token
+      post_encoded(base_url + TOKEN_PATH, body).parsed_response["access_token"]
     end
 
     def self.fixie
@@ -25,6 +23,7 @@ module M2ySimply
     def self.post_encoded(url, body)
       headers = {}
       headers['Content-Type'] = "application/x-www-form-urlencoded"
+      headers['charset'] = "utf-8"
       post(url, URI.encode_www_form(body), headers)
     end
 
@@ -32,6 +31,10 @@ module M2ySimply
       if headers.nil?
         headers = base_headers
       end
+      puts url
+      puts headers
+      puts body
+
       HTTParty.post(url, headers: headers, body: body,
                     http_proxyaddr: fixie.host,
                     http_proxyport: fixie.port,
@@ -43,10 +46,10 @@ module M2ySimply
         headers = base_headers
       end
       HTTParty.put(url, headers: headers, body: body,
-                    http_proxyaddr: fixie.host,
-                    http_proxyport: fixie.port,
-                    http_proxyuser: fixie.user,
-                    http_proxypass: fixie.password)
+                   http_proxyaddr: fixie.host,
+                   http_proxyport: fixie.port,
+                   http_proxyuser: fixie.user,
+                   http_proxypass: fixie.password)
     end
 
     def self.get(url, headers = nil)
@@ -54,10 +57,10 @@ module M2ySimply
         headers = base_headers
       end
       HTTParty.get(url, headers: headers,
-                    http_proxyaddr: fixie.host,
-                    http_proxyport: fixie.port,
-                    http_proxyuser: fixie.user,
-                    http_proxypass: fixie.password)
+                   http_proxyaddr: fixie.host,
+                   http_proxyport: fixie.port,
+                   http_proxyuser: fixie.user,
+                   http_proxypass: fixie.password)
     end
 
 

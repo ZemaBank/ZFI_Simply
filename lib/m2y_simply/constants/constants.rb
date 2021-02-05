@@ -3,4 +3,5 @@ module M2ySimply
   PROPOSALS_PATH = "/SWorks.WCFService/api/v1/Processo/"
   DOCUMENTS_PATH = "/Documentos"
   APPROVE_PROPOSALS_PATH = "/SWorks.WCFService/api/v1/Processo/IniciarProcesso/"
+  WORKFLOW_CODE = 1
 end
