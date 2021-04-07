@@ -19,7 +19,6 @@ module M2ySimply
       URI.parse M2ySimply.configuration.proxy
     end
 
-
     def self.post_encoded(url, body)
       headers = {}
       headers['Content-Type'] = "application/x-www-form-urlencoded"
@@ -31,7 +30,7 @@ module M2ySimply
       if headers.nil?
         headers = base_headers
       end
-      puts url
+      puts "Sending POST request to URL: #{url}"
       puts headers
       puts body
 
@@ -41,28 +40,32 @@ module M2ySimply
                     http_proxyuser: fixie.user,
                     http_proxypass: fixie.password)
     end
+
     def self.put(url, body, headers = nil)
       if headers.nil?
         headers = base_headers
       end
-      HTTParty.put(url, headers: headers, body: body,
-                   http_proxyaddr: fixie.host,
-                   http_proxyport: fixie.port,
-                   http_proxyuser: fixie.user,
-                   http_proxypass: fixie.password)
+      puts "Sending PUT request to URL: #{url}"
+      response = HTTParty.put(url, headers: headers, body: body,
+                              http_proxyaddr: fixie.host,
+                              http_proxyport: fixie.port,
+                              http_proxyuser: fixie.user,
+                              http_proxypass: fixie.password)
+      format_response(response)
     end
 
     def self.get(url, headers = nil)
       if headers.nil?
         headers = base_headers
       end
-      HTTParty.get(url, headers: headers,
-                   http_proxyaddr: fixie.host,
-                   http_proxyport: fixie.port,
-                   http_proxyuser: fixie.user,
-                   http_proxypass: fixie.password)
+      puts "Sending GET request to URL: #{url}"
+      response = HTTParty.get(url, headers: headers,
+                              http_proxyaddr: fixie.host,
+                              http_proxyport: fixie.port,
+                              http_proxyuser: fixie.user,
+                              http_proxypass: fixie.password)
+      format_response(response)
     end
-
 
     def self.base_headers
       headers = {}
@@ -71,5 +74,13 @@ module M2ySimply
       headers
     end
 
+    def self.format_response(original_response)
+      response = original_response.parsed_response
+      # Caso a parsed_response nao seja um hash, a response original veio com estrutura indeterminada
+      response = {} unless response.is_a?(Hash)
+      response[:status_code] = original_response.code
+      puts response
+      response
+    end
   end
 end
