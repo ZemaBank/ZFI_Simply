@@ -8,16 +8,16 @@ module M2ySimply
         :CodigoWorkflow => M2ySimply.configuration.workflow,
         :DadosEntrada => body
       }
-      post(base_url + PROPOSALS_PATH, parsed_body.to_json).parsed_response
+      response = post(base_url + PROPOSALS_PATH, parsed_body.to_json)
+      format_response(response)
     end
 
     def self.send_document(proposal_id, file_name, base64)
-      body = {
-        :NomeArquivo => base64,
-        :BytesBase64 => file_name,
-        :IdentificadorObjeto => proposal_id
+      parsed_body = {
+        :NomeArquivo => file_name,
+        :BytesBase64 => base64
       }
-      put(base_url + PROPOSALS_PATH + proposal_id + DOCUMENTS_PATH, parsed_body.to_json).parsed_response
+      put(base_url + PROPOSALS_PATH + proposal_id + DOCUMENTS_PATH, parsed_body.to_json)
     end
 
     def self.approve_proposal(proposal_id)
@@ -25,8 +25,7 @@ module M2ySimply
     end
 
     def self.check_proposal(proposal_id)
-      get(base_url + PROPOSALS_PATH + proposal_id).parsed_response
+      get(base_url + PROPOSALS_PATH + proposal_id)
     end
-
   end
 end
