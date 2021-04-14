@@ -21,7 +21,8 @@ module M2ySimply
     end
 
     def self.approve_proposal(proposal_id)
-      post(base_url + APPROVE_PROPOSALS_PATH + proposal_id, {}).parsed_response
+      response = post(base_url + APPROVE_PROPOSALS_PATH + proposal_id, {})
+      format_response(response)
     end
 
     def self.check_proposal(proposal_id)
