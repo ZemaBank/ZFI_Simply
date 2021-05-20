@@ -28,5 +28,11 @@ module M2ySimply
     def self.check_proposal(proposal_id)
       get(base_url + PROPOSALS_PATH + proposal_id)
     end
+
+    def self.reassess_proposal(proposal_id)
+      query_string = "?identificador=#{proposal_id}&estimulo=1&mensagem=*"
+      response = post(base_url + PROPOSALS_PATH + REASSESS_PROPOSAL_PATH + query_string, {})
+      format_response(response)
+    end
   end
 end
