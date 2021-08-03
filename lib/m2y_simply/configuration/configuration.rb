@@ -3,7 +3,7 @@
 module M2ySimply
   class Configuration
 
-    attr_writer :username, :password, :proxy, :server_url, :workflow
+    attr_writer :username, :password, :proxy, :server_url, :workflow, :env
 
     def initialize #:nodoc:
       @username = nil
@@ -11,6 +11,7 @@ module M2ySimply
       @proxy = nil
       @workflow = nil
       @server_url = nil
+      @env = nil
     end
 
     def username
@@ -33,5 +34,12 @@ module M2ySimply
       @workflow
     end
 
+    def env
+      @env
+    end
+
+    def production?
+      env.to_s.upcase == 'PRD'
+    end
   end
 end
