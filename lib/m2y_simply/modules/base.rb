@@ -16,7 +16,7 @@ module M2ySimply
     end
 
     def self.fixie
-      URI.parse M2ySimply.configuration.proxy if !M2ySimply.configuration.production?
+      URI.parse M2ySimply.configuration.proxy
     end
 
     def self.post_encoded(url, body)
@@ -33,16 +33,11 @@ module M2ySimply
       puts "Sending POST request to URL: #{url}"
       puts headers
       puts body
-
-      if M2ySimply.configuration.production?
-        HTTParty.post(url, headers: headers, body: body)
-      else
-        HTTParty.post(url, headers: headers, body: body,
-                      http_proxyaddr: fixie.host,
-                      http_proxyport: fixie.port,
-                      http_proxyuser: fixie.user,
-                      http_proxypass: fixie.password)
-      end
+      HTTParty.post(url, headers: headers, body: body,
+                    http_proxyaddr: fixie.host,
+                    http_proxyport: fixie.port,
+                    http_proxyuser: fixie.user,
+                    http_proxypass: fixie.password)
     end
 
     def self.put(url, body, headers = nil)
@@ -50,15 +45,11 @@ module M2ySimply
         headers = base_headers
       end
       puts "Sending PUT request to URL: #{url}"
-      if M2ySimply.configuration.production?
-        response = HTTParty.put(url, headers: headers, body: body)
-      else
-        response = HTTParty.put(url, headers: headers, body: body,
-                                http_proxyaddr: fixie.host,
-                                http_proxyport: fixie.port,
-                                http_proxyuser: fixie.user,
-                                http_proxypass: fixie.password)
-      end
+      response = HTTParty.put(url, headers: headers, body: body,
+                              http_proxyaddr: fixie.host,
+                              http_proxyport: fixie.port,
+                              http_proxyuser: fixie.user,
+                              http_proxypass: fixie.password)
       format_response(response)
     end
 
@@ -67,15 +58,11 @@ module M2ySimply
         headers = base_headers
       end
       puts "Sending GET request to URL: #{url}"
-      if M2ySimply.configuration.production?
-        response = HTTParty.get(url, headers: headers)
-      else
-        response = HTTParty.get(url, headers: headers,
-                                http_proxyaddr: fixie.host,
-                                http_proxyport: fixie.port,
-                                http_proxyuser: fixie.user,
-                                http_proxypass: fixie.password)
-      end
+      response = HTTParty.get(url, headers: headers,
+                              http_proxyaddr: fixie.host,
+                              http_proxyport: fixie.port,
+                              http_proxyuser: fixie.user,
+                              http_proxypass: fixie.password)
       format_response(response)
     end
 
