@@ -30,9 +30,9 @@ module M2ySimply
       if headers.nil?
         headers = base_headers
       end
-      puts "Sending POST request to URL: #{url}"
-      puts headers
-      puts body
+      # puts "Sending POST request to URL: #{url}"
+      # puts headers
+      # puts body
       HTTParty.post(url, headers: headers, body: body,
                     http_proxyaddr: fixie.host,
                     http_proxyport: fixie.port,
@@ -44,7 +44,7 @@ module M2ySimply
       if headers.nil?
         headers = base_headers
       end
-      puts "Sending PUT request to URL: #{url}"
+      # puts "Sending PUT request to URL: #{url}"
       response = HTTParty.put(url, headers: headers, body: body,
                               http_proxyaddr: fixie.host,
                               http_proxyport: fixie.port,
@@ -57,7 +57,7 @@ module M2ySimply
       if headers.nil?
         headers = base_headers
       end
-      puts "Sending GET request to URL: #{url}"
+      # puts "Sending GET request to URL: #{url}"
       response = HTTParty.get(url, headers: headers,
                               http_proxyaddr: fixie.host,
                               http_proxyport: fixie.port,
@@ -86,7 +86,7 @@ module M2ySimply
         response[:original_request] = nil
         response[:url] = nil
       end
-      puts response
+      # puts response
       response
     end
   end
