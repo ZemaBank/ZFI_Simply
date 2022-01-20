@@ -5,8 +5,8 @@ module M2ySimply
 
     def self.create_proposal(body)
       parsed_body = {
-        :CodigoWorkflow => M2ySimply.configuration.workflow,
-        :DadosEntrada => body
+        CodigoWorkflow: M2ySimply.configuration.workflow,
+        DadosEntrada: body
       }
       response = post(base_url + PROPOSALS_PATH, parsed_body.to_json)
       format_response(response)
@@ -14,10 +14,21 @@ module M2ySimply
 
     def self.send_document(proposal_id, file_name, base64)
       parsed_body = {
-        :NomeArquivo => file_name,
-        :BytesBase64 => base64
+        NomeArquivo: file_name,
+        BytesBase64: base64
       }
       put(base_url + PROPOSALS_PATH + proposal_id + DOCUMENTS_PATH, parsed_body.to_json)
+    end
+
+    def self.send_selfie(proposal_id, base64)
+      parsed_body = {
+        parametros: [
+          nome: 'Base64',
+          valor: base64
+        ],
+        prioridade: 1
+      }
+      put(base_url + PROPOSALS_PATH + proposal_id, parsed_body.to_json)
     end
 
     def self.approve_proposal(proposal_id)
